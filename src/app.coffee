@@ -25,3 +25,5 @@ run_code = ->
   console.log r
   a.innerHTML += r.toString() + '<br />'
   b.innerText = ''
+
+document.getElementById('b').click();
