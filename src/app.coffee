@@ -5,10 +5,27 @@ window.Swash =
     version = ->
       'Swash v. 0.1.0'
 
+  constructor: ->
+    @id = @randomString()
+
+  randomString: ->
+    i = 12
+    chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz"
+    while i--
+      rnum = Math.floor(Math.random() * chars.length);
+      r = (r || '') + chars.substring rnum, rnum+1
+    r
+
   init: ->
-    document.addEventListener 'keyup', (e)->
-      if e.ctrlKey and e.keyCode == 65
-        window.Swash.run_code()
+    document.addEventListener 'keydown', (e)=>
+      if (e.ctrlKey or e.metaKey) and e.keyCode is 13
+        @run_code()
+    
+    document.addEventListener 'keyup', (e)=>
+      if (e.keyCode is 9)
+        $(e.target).trigger type: "keypress", which: 32
+        $(e.target).trigger type: "keypress", which: 32
+        e.preventDefault();
 
   log: (msg)->
     a.innerHTML += msg + '<br />'
