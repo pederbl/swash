@@ -10,6 +10,9 @@ app.get '/', (req, res)->
 app.get '/coffee', (req, res)->
   res.sendfile 'coffee-script.js'
 
+app.get '/zepto', (req, res)->
+  res.sendfile 'vendor/zepto.min.js'
+
 app.get '/:id', (req, res)->
   res.type 'text/javascript'
   exec 'coffee -c -p src/' + req.params.id.replace(/[^a-z]+/g, '') + ".coffee", (err, out)->

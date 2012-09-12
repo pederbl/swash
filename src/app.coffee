@@ -7,7 +7,7 @@ class window.Swash
   constructor: ->
     @id = @randomString()
     document.addEventListener 'keydown', (e)=>
-      if ((e.ctrlKey and e.keyCode is 65) or ((e.ctrlKey or e.metaKey) and e.keyCode is 13))
+      if (e.ctrlKey or e.metaKey) and e.keyCode is 13
         @run_code()
 
   randomString: ->
