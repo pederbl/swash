@@ -1,4 +1,3 @@
-
 class window.Swash
 
   context:
@@ -13,7 +12,7 @@ class window.Swash
 
   randomString: ->
     i = 12
-    chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz"
+    chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz"
     while i--
       rnum = Math.floor(Math.random() * chars.length);
       r = (r || '') + chars.substring rnum, rnum+1
@@ -26,10 +25,11 @@ class window.Swash
     a.innerHTML += '<b>' + b.innerHTML + '</b><br />'
     code = '(function () {\n'
     for v of @context
-      code += 'var ' + v + ' = window.dajksvrmtkbldfnb.context.' + v + ';\n'
+      code += 'var ' + v + ' = window.' + @id + '.context.' + v + ';\n'
     code += 'return '
     code += (CoffeeScript.compile 'return ->\n  ' + b.innerText.replace(/\n/g, '\n  ')).replace(/(\b)([a-zA-Z][a-zA-Z0-9]* = )/g, '$1$2window.' + @id + '.context.$2')
     code += '}).call({})\n'
+    console.log code
     out = ''
     try
       r = eval code
