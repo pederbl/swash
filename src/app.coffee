@@ -1,7 +1,17 @@
 
 class window.Swash
 
-  @randomString: ->
+  context:
+    version = ->
+      'Swash v. 0.1.0'
+
+  constructor: ->
+    @id = @randomString()
+    document.addEventListener 'keyup', (e)=>
+      if e.ctrlKey and e.keyCode == 65
+        @run_code()
+
+  randomString: ->
     i = 12
     chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz"
     while i--
@@ -9,18 +19,8 @@ class window.Swash
       r = (r || '') + chars.substring rnum, rnum+1
     r
 
-  context:
-    version = ->
-      'Swash v. 0.1.0'
-
-  constructor: ->
-    @id = 
-    document.addEventListener 'keyup', (e)=>
-      if e.ctrlKey and e.keyCode == 65
-        @run_code()
-
   run_code: ->
-    window.dajksvrmtkbldfnb = @
+    window[@id] = @
     a = document.getElementById 'a'
     b = document.getElementById 'b'
     a.innerHTML += '<b>' + b.innerHTML + '</b><br />'
@@ -28,7 +28,7 @@ class window.Swash
     for v of @context
       code += 'var ' + v + ' = window.dajksvrmtkbldfnb.context.' + v + ';\n'
     code += 'return '
-    code += (CoffeeScript.compile 'return ->\n  ' + b.innerText.replace(/\n/g, '\n  ')).replace(/(\b)([a-zA-Z][a-zA-Z0-9]* = )/g, '$1$2window.dajksvrmtkbldfnb.context.$2')
+    code += (CoffeeScript.compile 'return ->\n  ' + b.innerText.replace(/\n/g, '\n  ')).replace(/(\b)([a-zA-Z][a-zA-Z0-9]* = )/g, '$1$2window.' + @id + '.context.$2')
     code += '}).call({})\n'
     out = ''
     try
@@ -38,4 +38,4 @@ class window.Swash
       out = '<b style="color: red;">' + e.toString() + '</b>'
     a.innerHTML += out + '<br />'
     b.innerText = ''
-    delete window.dajksvrmtkbldfnb
+    delete window[@id]
