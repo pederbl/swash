@@ -5,6 +5,7 @@
     <script type="text/javascript" src="coffee"></script>
     <script type="text/javascript" src="zepto"></script>
     <script type="text/javascript" src="app"></script>
+    <script type="text/javascript" src="fb"></script>
     <style type="text/css">
       /* MOVE TO EXTERNAL FILE */
       #a {
@@ -23,11 +24,9 @@
     <div id="b" contentEditable="true"></div>
     <script type="text/javascript">
 
-      var app = new Swash()
+      Swash.init();
 
-      window.onload = function () {
-        document.getElementById('b').focus();
-      }
+      document.getElementById('b').focus();
 
     </script>
   </body>

@@ -1,4 +1,5 @@
-class window.Swash
+
+window.Swash =
 
   context:
     version = ->
@@ -6,15 +7,6 @@ class window.Swash
 
   constructor: ->
     @id = @randomString()
-    document.addEventListener 'keydown', (e)=>
-      if (e.ctrlKey or e.metaKey) and e.keyCode is 13
-        @run_code()
-
-    document.addEventListener 'keyup', (e)=>
-      if (e.keyCode is 9)
-        $(e.target).trigger type: "keypress", which: 32
-        $(e.target).trigger type: "keypress", which: 32
-        e.preventDefault();
 
   randomString: ->
     i = 12
@@ -24,16 +16,26 @@ class window.Swash
       r = (r || '') + chars.substring rnum, rnum+1
     r
 
+  init: ->
+    document.addEventListener 'keydown', (e)=>
+      if (e.ctrlKey or e.metaKey) and e.keyCode is 13
+        @run_code()
+    
+    document.addEventListener 'keyup', (e)=>
+      if (e.keyCode is 9)
+        $(e.target).trigger type: "keypress", which: 32
+        $(e.target).trigger type: "keypress", which: 32
+        e.preventDefault();
+
   run_code: ->
-    window[@id] = @
     a = document.getElementById 'a'
     b = document.getElementById 'b'
     a.innerHTML += '<b>' + b.innerHTML + '</b><br />'
     code = '(function () {\n'
     for v of @context
-      code += 'var ' + v + ' = window.' + @id + '.context.' + v + ';\n'
+      code += 'var ' + v + ' = window.Swash.context.' + v + ';\n'
     code += 'return '
-    code += (CoffeeScript.compile 'return ->\n  ' + b.innerText.replace(/\n/g, '\n  ')).replace(/(\b)([a-zA-Z][a-zA-Z0-9]* = )/g, '$1$2window.' + @id + '.context.$2')
+    code += (CoffeeScript.compile 'return ->\n  ' + b.innerText.replace(/\n/g, '\n  ')).replace(/(\b)([a-zA-Z][a-zA-Z0-9]* = )/g, '$1$2window.Swash.context.$2')
     code += '}).call({})\n'
     out = ''
     try
@@ -43,4 +45,3 @@ class window.Swash
       out = '<b style="color: red;">' + e.toString() + '</b>'
     a.innerHTML += out + '<br />'
     b.innerText = ''
-    delete window[@id]
