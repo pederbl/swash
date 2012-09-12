@@ -13,6 +13,9 @@ app.get '/coffee', (req, res)->
 app.get '/zepto', (req, res)->
   res.sendfile 'vendor/zepto.min.js'
 
+app.get '/fb-init', (req, res)->
+  res.sendfile 'fb.html'
+
 app.get '/:id', (req, res)->
   res.type 'text/javascript'
   exec 'coffee -c -p src/' + req.params.id.replace(/[^a-z]+/g, '') + ".coffee", (err, out)->
