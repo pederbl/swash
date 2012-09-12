@@ -10,6 +10,12 @@ class window.Swash
       if (e.ctrlKey or e.metaKey) and e.keyCode is 13
         @run_code()
 
+    document.addEventListener 'keyup', (e)=>
+      if (e.keyCode is 9)
+        $(e.target).trigger type: "keypress", which: 32
+        $(e.target).trigger type: "keypress", which: 32
+        e.preventDefault();
+
   randomString: ->
     i = 12
     chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz"
