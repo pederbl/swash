@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SWASH - FACEBOOK</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      token = /[\#\?\&]access_token=([^&#]+)/.exec(window.location.hash);
+      localStorage.setItem('fb-access-token', token[1]);
+      window.close();
+    </script>
+  </body>
+</html>
