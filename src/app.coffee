@@ -26,4 +26,5 @@ run_code = ->
   a.innerHTML += r.toString() + '<br />'
   b.innerText = ''
 
-document.getElementById('b').click();
+window.onload = ->
+  document.getElementById('b').focus()
