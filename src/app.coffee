@@ -6,8 +6,8 @@ class window.Swash
 
   constructor: ->
     @id = @randomString()
-    document.addEventListener 'keyup', (e)=>
-      if e.ctrlKey and e.keyCode == 65
+    document.addEventListener 'keydown', (e)=>
+      if ((e.ctrlKey and e.keyCode is 65) or ((e.ctrlKey or e.metaKey) and e.keyCode is 13))
         @run_code()
 
   randomString: ->
@@ -29,7 +29,6 @@ class window.Swash
     code += 'return '
     code += (CoffeeScript.compile 'return ->\n  ' + b.innerText.replace(/\n/g, '\n  ')).replace(/(\b)([a-zA-Z][a-zA-Z0-9]* = )/g, '$1$2window.' + @id + '.context.$2')
     code += '}).call({})\n'
-    console.log code
     out = ''
     try
       r = eval code
