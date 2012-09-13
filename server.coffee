@@ -8,10 +8,10 @@ app.get '/', (req, res)->
   res.sendfile 'index.html'
 
 app.get '/coffee', (req, res)->
-  res.sendfile 'coffee-script.js'
+  res.sendfile 'vendor/coffee-script.js'
 
-app.get '/zepto', (req, res)->
-  res.sendfile 'vendor/zepto.min.js'
+app.get '/assets/javascripts/min/:id', (req, res)->
+  res.sendfile 'vendor/' + req.params.id.replace(/[0-9a-zA-Z_-.]/g, '') + '.min.js'
 
 app.get '/fb-init', (req, res)->
   res.sendfile 'fb.html'
